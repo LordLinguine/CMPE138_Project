@@ -22,7 +22,7 @@ WITH minimized_data AS(
     AND points>=var_min_points
 )
 SELECT * FROM minimized_data;
---Unoptimized Query 2 (I/O cost: 40.57 MB)
+--Unoptimized/Optimized Query 2 (I/O cost: 40.57 MB)
 --Player's team name, full name, points, field goal percentage, field goals attempted, and threes attempted displayed
 -- for player's who shot more than 50% from the field on 10+ field goal attempts, and 4+ three point attempts
 SELECT team_name, full_name, points, field_goals_pct, field_goals_att, three_points_att
