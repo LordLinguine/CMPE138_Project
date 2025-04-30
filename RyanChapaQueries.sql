@@ -1,5 +1,6 @@
 --Clutch stats
 -- Query 1 (unoptimized): finds the players who are the most reliable clutch three-point shooters in the final five minutes of the second half.
+--IO COST (unoptimized): 120.21 MB
 WITH
   clutch_shots AS (
   SELECT
@@ -39,6 +40,7 @@ WHERE
 
 --Top 25 Players
 --Query 2 (unoptimized): Identifies the top 25 players with the best custom performance score including points, rebounds, assists, and steals.
+--IO COST (unoptimized): 43.42 MB
 SELECT
   full_name,
   team_name,
@@ -49,7 +51,7 @@ SELECT
   steals,
   ROUND(points + rebounds * 1.2 + assists * 1.5 + steals * 2, 1) AS performance_score
 FROM
-  `bigquery-public-data.ncaa_basketball.mbb_player_stats`
+  `bigquery-public-data.ncaa_basketball.mbb_players_games_sr`
 WHERE
   points IS NOT NULL
 ORDER BY
