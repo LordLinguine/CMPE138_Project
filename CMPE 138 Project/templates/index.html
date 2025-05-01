@@ -1,0 +1,141 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>NCAA Basketball Stats Explorer</h1>
+    
+    <div class="card">
+        <h2>Team Stats</h2>
+        <form action="/get_stats" method="post">
+            <div class="form-group">
+                <label for="team">Select Team:</label>
+                <select name="team" id="team" required>
+                    <option value="">Select a team</option>
+                    {% for team in teams %}
+                        <option value="{{ team }}" {% if selected_team == team %}selected{% endif %}>{{ team }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="season">Select Season:</label>
+                <select name="season" id="season" required>
+                    <option value="">Select a season</option>
+                    {% for season in available_seasons %}
+                        <option value="{{ season }}" {% if selected_season == season|string %}selected{% endif %}>{{ season }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn">Get Team Stats</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="card">
+        <h2>Player Search</h2>
+        <form action="/search_player" method="post">
+            <div class="form-group">
+                <label for="player_name">Player Name:</label>
+                <input type="text" name="player_name" id="player_name" placeholder="Enter player name" required 
+                       value="{{ player_search if player_search else '' }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="player_season">Season (Optional):</label>
+                <select name="season" id="player_season">
+                    <option value="">All Seasons</option>
+                    {% for season in available_seasons %}
+                        <option value="{{ season }}" {% if selected_season == season|string %}selected{% endif %}>{{ season }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn">Search Player</button>
+            </div>
+        </form>
+    </div>
+    
+    {% if search_note %}
+        <div class="card">
+            <h2>{{ search_note }}</h2>
+            
+            {% if player_results %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Player Name</th>
+                            <th>Team</th>
+                            <th>Season</th>
+                            <th>Avg Points</th>
+                            <th>Avg Assists</th>
+                            <th>FG %</th>
+                            <th>3PT %</th>
+                            <th>Games</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in player_results %}
+                            <tr>
+                                <td>{{ result.full_name }}</td>
+                                <td>{{ result.team_name }}</td>
+                                <td>{{ result.season }}</td>
+                                <td>{{ result.avg_points }}</td>
+                                <td>{{ result.avg_assists }}</td>
+                                <td>{{ result.avg_fg_pct|round(1) }} %</td>
+                                <td>{{ result.avg_3pt_pct|round(1) }} %</td>
+                                <td>{{ result.games_played }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No players found with that name. Try a different search term.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    
+    {% if season_note and not search_note %}
+        <div class="card">
+            <h2>{{ season_note }}</h2>
+            
+            {% if results %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Player Name</th>
+                            <th>Points</th>
+                            <th>Assists</th>
+                            <th>FG %</th>
+                            <th>3PT %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                            <tr>
+                                <td>{{ result.full_name }}</td>
+                                <td>{{ result.points }}</td>
+                                <td>{{ result.assists }}</td>
+                                <td>{{ result.field_goals_pct|round(1) }} %</td>
+                                <td>{{ result.three_points_pct|round(1) }} %</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Select a team and season above to view player stats.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

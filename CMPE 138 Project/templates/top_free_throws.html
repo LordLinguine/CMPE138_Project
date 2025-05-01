@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Top Free Throw Shooters</h1>
+    
+    <div class="card">
+        <p>Best free throw shooters with at least 30 attempts</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>Made</th>
+                    <th>Attempted</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.full_name }}</td>
+                        <td>{{ result.total_made }}</td>
+                        <td>{{ result.total_attempted }}</td>
+                        <td>{{ "%.1f"|format(result.free_throw_pct) }}%</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

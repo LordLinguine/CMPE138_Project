@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>High Efficiency Players</h1>
+    
+    <div class="card">
+        <p>Players who shot more than 50% from the field on 10+ field goal attempts, and 4+ three point attempts</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Player Name</th>
+                    <th>Points</th>
+                    <th>Field Goal %</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.team_name }}</td>
+                        <td>{{ result.full_name }}</td>
+                        <td>{{ result.points }}</td>
+                        <td>{{ "%.1f"|format(result.field_goals_pct) }}%</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

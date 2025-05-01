@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Top 3-Point Shooters</h1>
+    
+    <div class="card">
+        <p>Best three-point shooters with at least 20 attempts</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>3-Point %</th>
+                    <th>3-Point Attempts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.full_name }}</td>
+                        <td>{{ result.three_points_pct|round(1) }} %</td>
+                        <td>{{ result.three_points_att }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Players with Points >= 1</h1>
+    
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Player Name</th>
+                    <th>Points</th>
+                    <th>Assists</th>
+                    <th>Minutes Played</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.team_name }}</td>
+                        <td>{{ result.full_name }}</td>
+                        <td>{{ result.points }}</td>
+                        <td>{{ result.assists }}</td>
+                        <td>{{ result.minutes_int64 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
