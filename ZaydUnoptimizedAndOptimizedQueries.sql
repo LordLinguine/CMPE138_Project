@@ -1,5 +1,5 @@
 --Unoptimized Query 1 (I/O cost: 67.39 MB)
---Player's team name, player full name, player points, and minuted displayed where player scored more than one point, was a starter, 
+--Player's team name, player full name, player points, and minutes displayed where player scored more than one point, was a starter, 
 --and played for more than 30 minutes in a game:
 --ordered by full name
 DECLARE var_min_points INT64;
@@ -18,7 +18,7 @@ GROUP BY
 ORDER BY
   a.full_name
 --Optimized Query 1 (I/O cost: 35.18 MB)
---Player's team name, player full name, player points, and minuted displayed where player scored more than one point, was a starter, 
+--Player's team name, player full name, player points, and minutes displayed where player scored more than one point, was a starter, 
 --and played for more than 30 minutes in a game:
 --ordered by full name
 DECLARE var_min_points INT64;
@@ -29,7 +29,7 @@ WITH filtered_out_data AS (
   WHERE
     points >= var_min_points
     AND starter = TRUE
-    AND minuted_int64 > 30
+    AND minutes_int64 > 30
   )
   SELECT f.team_name, f.full_name, f.points, f.minutes
   FROM filtered_out_data f
